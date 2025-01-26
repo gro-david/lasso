@@ -41,10 +41,6 @@ def run_fzf(options):
 
 def normal_mode():
     desktop_dirs = [
-        "/usr/share/applications",
-        f"/home/{username}/.local/share/applications",
-        "/var/lib/flatpak/exports/share/applications",
-        f"/home/{username}/.local/share/flatpak/exports/share/applications",
         "/run/current-system/sw-share/applications"
     ]
     desktop_files = [
