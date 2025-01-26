@@ -44,7 +44,8 @@ def normal_mode():
         "/usr/share/applications",
         f"/home/{username}/.local/share/applications",
         "/var/lib/flatpak/exports/share/applications",
-        f"/home/{username}/.local/share/flatpak/exports/share/applications"
+        f"/home/{username}/.local/share/flatpak/exports/share/applications",
+        "/run/current-system/sw-share/applications"
     ]
     desktop_files = [
         str(file) for dir_ in desktop_dirs for file in Path(dir_).glob("*.desktop") if file.is_file()
