@@ -41,13 +41,13 @@ def run_fzf(options):
     try:
         fzf_command = (
           "fzf --header-lines=0 --no-info "
-          "--preview "while true; do echo \"$(cat /tmp/launcher_top_bar)\"; sleep 0.5; done" "
+          "--preview 'while true; do echo \"$(cat /tmp/launcher_top_bar)\"; sleep 0.5; done' "
           "--preview-window=up:1:follow:wrap:noinfo"
         )
         if 'fish' in os.environ('SHELL'):
           fzf_command = (
               "fzf --header-lines=0 --no-info "
-              "--preview 'bash while true; echo \"$(cat /tmp/launcher_top_bar)\"; sleep 0.5; end' "
+              "--preview 'while true; echo \"$(cat /tmp/launcher_top_bar)\"; sleep 0.5; end' "
               "--preview-window=up:1:follow:wrap:noinfo"
           )
         fzf_input = "\n".join(options)
