@@ -24,6 +24,7 @@ This is my quick and dirty fzf based keyboard application launcher, dashboard, a
  - python-psutil, for showing battery information in the header bar
  - fzf, for the whole program to even work
  - nerdfont, to display the icons in the status bar correctly
+ - fish, this is the shell for which this was written. it is probably possible to port to other shells, but I did not have the time up until now.
 
 ## How to use:
  -  Add the following rule to your niri config file:
@@ -52,3 +53,8 @@ This is my quick and dirty fzf based keyboard application launcher, dashboard, a
  - In normal mode .desktop files will be parsed from all of the usual locations, their name will be displayed, when selected the binary defined in their Exec field will be executed
  - In window mode the launcher will get all open windows using `niri msg windows` and will switch to the selected one with `niri msg action focus-window --id <id>`
  - In dashboard mode your entries will be parsed and the `exec` field of the selected one will be executed. You should either use a TUI or a shell in your exec field.
+
+## Installation
+On most distros you will be able to use the launcher by just cloning the repo and then running the `start.py` file
+
+On NixOS this should work too, but you can also use home-manager. You can just import the two files into home-manager. You can configure the dashboard using `launcher.nix`, a few entries will already be included by default. Then just rebuild your home. This will use the `nix` branch which already has some things set up to work with NixOS.
