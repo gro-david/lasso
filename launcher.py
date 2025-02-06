@@ -107,6 +107,8 @@ def window_mode():
         window_id = next((line.split(" ", 2)[2].strip(":") for line in lines if line.startswith("Window ID")), None)
         title = next((line.split(": ", 1)[1] for line in lines if line.startswith("Title:")), None)
         title = title.replace('"', '')
+        
+        if title == 'alacritty launcher': continue
 
         if window_id and title:
             options.append(title)
