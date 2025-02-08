@@ -84,7 +84,8 @@ def normal_mode():
         exit()
     elif selection in exec_map:
         try:
-            result = subprocess.run(exec_map[selection], shell=True, capture_output=True, text=True, start_new_session=True)
+            command = f"setsid {exec_map[selection]} > /dev/null 2>&1 &"
+            result = subprocess.run(command, shell=True, capture_output=True, text=True)
             if result.returncode != 0:
                 print(f"Error launching {selection}:\n{result.stderr}")
             else:
