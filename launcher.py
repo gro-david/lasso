@@ -82,8 +82,8 @@ def normal_mode():
     elif selection == ":q":
         exit()
     elif selection in exec_map:
-        process = subprocess.Popen(exec_map[selection], shell=True, start_new_session=True)
-        print(env)
+        command = f"setsid {exec_map[selection]} > /dev/null 2>&1 &"
+        result = subprocess.run(command, shell=True, capture_output=True, text=True)
         exit()
 
 # Window mode: Focus a window
