@@ -9,7 +9,7 @@ let
       owner = "gro-david";
       repo = "launcher";
       rev = "nix";
-      hash = "sha256-Kt1BObb78SyzbJOUjU3zEaLTsxww/Dcl3B6L1HU02vQ=";
+      hash = "sha256-kpv0nt2zqzA9U5wCuZlr3zZK2xOxN5WwCIev/ht+zKg=";
     };
     installPhase = ''
       mkdir -p $out/bin
