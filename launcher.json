@@ -1,0 +1,15 @@
+{
+  "apps": [
+    {
+      "name": "name1",
+      "exec": "exec1"
+    }
+  ],
+  "app_dirs": [],
+  "dashboard": [
+    {
+      "name": "name1",
+      "exec": "exec1"
+    }
+  ]
+}
