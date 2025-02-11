@@ -13,10 +13,12 @@ let
     };
     installPhase = ''
       mkdir -p $out/bin
+      mkdir -p $out/modules
       echo "#!/bin/sh" > $out/bin/start-launcher
       echo "python $out/start.py" >> $out/bin/start-launcher
       chmod +x $out/bin/start-launcher
-      cp start.py launcher.py system.py $out/
+      cp start.py launcher.py $out/
+      cp modules/system.py modules/read_conf.py $out/modules/
     '';
   };
 
