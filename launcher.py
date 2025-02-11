@@ -4,9 +4,9 @@ import json
 import threading
 import time
 from pathlib import Path
-import system
 
 from modules import read_conf as conf
+from modules import system
 
 # Globals to track mode and system info
 current_mode = "normal"
