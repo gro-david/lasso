@@ -5,7 +5,7 @@ import pathlib
 def main():
     # Launch Alacritty with the --print-events flag
     process = subprocess.Popen(
-        ['alacritty', '-T', 'alacritty launcher', '--print-events', '-e', 'python', str(pathlib.Path(__file__).parent.resolve().joinpath('launcher.py')) ],
+        [ 'nixGL', 'alacritty', '-T', 'alacritty launcher', '--print-events', '-e', 'python', str(pathlib.Path(__file__).parent.resolve().joinpath('launcher.py')) ],
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         text=True
