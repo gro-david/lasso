@@ -70,7 +70,7 @@ def normal_mode():
     options.extend(conf.app_names)
     exec_map.update(conf.app_exec_map)
 
-    if not ":d" in options: options.extend([":n", ":d", ":q"])
+    if not ":q" in options: options.extend([":n", ":d", ":q"])
     selection = run_fzf(options)
 
     if selection == ":w":
@@ -113,7 +113,7 @@ def window_mode():
             options.append(title)
             window_map[title] = window_id
 
-    if not ":d" in options: options.extend([":n", ":d", ":q"])
+    if not ":q" in options: options.extend([":n", ":d", ":q"])
     selection = run_fzf(options)
 
     if selection == ":n":
@@ -135,7 +135,7 @@ def dashboard_mode():
     options = conf.dashboard_names
     exec_map = conf.dashboard_exec_map
 
-    if not ":d" in options: options.extend([":n", ":d", ":q"])
+    if not ":q" in options: options.extend([":n", ":d", ":q"])
     selection = run_fzf(options)
 
     if selection == ":n":
