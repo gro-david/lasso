@@ -4,7 +4,7 @@ with lib;
 let
   launcher = pkgs.stdenv.mkDerivation {
     pname = "launcher";
-    version = "1.2.2";
+    version = "1.2.3";
     src = pkgs.fetchFromGitHub {
       owner = "gro-david";
       repo = "launcher";
