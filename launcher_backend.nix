@@ -31,6 +31,7 @@ in {
       dashboard = mkOption {
         type = types.listOf (types.submodule {
           options = {
+         	  env_path = mkOption { type = types.str; default = ""; };
             name = mkOption { type = types.str; };
             exec = mkOption { type = types.str; };
           };
@@ -42,6 +43,7 @@ in {
       apps = mkOption {
         type = types.listOf (types.submodule {
           options = {
+          	env_path = mkOption { type = types.str; default = ""; };
             name = mkOption { type = types.str; };
             exec = mkOption { type = types.str; };
           };

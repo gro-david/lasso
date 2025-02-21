@@ -65,7 +65,7 @@ def normal_mode():
 
         if name and exec_cmd:
             options.append(name)
-            exec_map[name] = exec_cmd
+            exec_map[name] = {"exec": exec_cmd, "env_path": ""}
 
     options.extend(conf.app_names)
     exec_map.update(conf.app_exec_map)
@@ -81,7 +81,10 @@ def normal_mode():
         exit()
     elif selection in exec_map:
         try:
-            command = f"setsid {exec_map[selection]} > /dev/null 2>&1 &"
+            if exec_map[selection]["env_path"] != "":
+                print(exec_map[selection]["env_path"])
+                os.environ["PATH"] = exec_map[selection]["env_path"]
+            command = f"setsid {exec_map[selection]["exec"]} > /dev/null 2>&1 &"
             result = subprocess.run(command, shell=True, capture_output=True, text=True)
             if result.returncode != 0:
                 print(f"Error launching {selection}:\n{result.stderr}")
