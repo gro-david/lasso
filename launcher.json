@@ -4,6 +4,11 @@
 			"env_path": "/sbin",
 			"name": "waydroid",
 			"exec": "waydroid show-full-ui"
+		},
+		{
+			"env_path": "",
+			"name": "nmtui",
+			"exec": "nmtui"
 		}
 	],
 	"app_dirs": [],

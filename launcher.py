@@ -81,10 +81,11 @@ def normal_mode():
         exit()
     elif selection in exec_map:
         try:
+            path = os.environ["PATH"]
             if exec_map[selection]["env_path"] != "":
-                print(exec_map[selection]["env_path"])
                 os.environ["PATH"] = exec_map[selection]["env_path"]
             command = f"setsid {exec_map[selection]["exec"]} > /dev/null 2>&1 &"
+            os.environ["PATH"] = path
             result = subprocess.run(command, shell=True, capture_output=True, text=True)
             if result.returncode != 0:
                 print(f"Error launching {selection}:\n{result.stderr}")
@@ -148,7 +149,11 @@ def dashboard_mode():
     elif selection == ":q":
         exit()
     elif selection in exec_map:
-        subprocess.run(exec_map[selection], shell=True)
+        path = os.environ["PATH"]
+        if exec_map[selection]["env_path"] != "":
+            os.environ["PATH"] = exec_map[selection]["env_path"]
+        subprocess.run(exec_map[selection]["exec"], shell=True)
+        os.environ["PATH"] = path
         dashboard_mode()
 
 # Start system info updater thread
