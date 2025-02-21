@@ -4,7 +4,7 @@ with lib;
 let
   launcher = pkgs.stdenv.mkDerivation {
     pname = "launcher";
-    version = "1.2.4";
+    version = "1.3.0";
     src = pkgs.fetchFromGitHub {
       owner = "gro-david";
       repo = "launcher";
@@ -14,11 +14,16 @@ let
     installPhase = ''
       mkdir -p $out/bin
       mkdir -p $out/modules
+      cp start.py launcher.py $out/
+      cp modules/system.py modules/read_conf.py modules/network.py $out/modules/
+
       echo "#!/bin/sh" > $out/bin/start-launcher
       echo "python $out/start.py" >> $out/bin/start-launcher
       chmod +x $out/bin/start-launcher
-      cp start.py launcher.py $out/
-      cp modules/system.py modules/read_conf.py $out/modules/
+
+      echo "#!/bin/sh" > $out/bin/start-launcher-network
+      echo "python $out/modules/network.py" >> $out/bin/start-launcher-network
+      chmod +x $out/bin/start-launcher-network
     '';
   };
 
