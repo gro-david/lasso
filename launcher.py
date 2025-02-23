@@ -4,12 +4,12 @@ import json
 import threading
 import time
 from pathlib import Path
-import system
+
+from modules import read_conf as conf
+from modules import system
 
 # Globals to track mode and system info
 current_mode = "normal"
-username = os.getlogin()
-launcher_config = f"/home/{username}/.config/launcher.json"
 
 # Function to get system info
 def get_system_info():
@@ -40,12 +40,7 @@ def run_fzf(options):
     return result.stdout.strip()
 
 def normal_mode():
-    desktop_dirs = [
-        "/usr/share/applications",
-        f"/home/{username}/.local/share/applications",
-        "/var/lib/flatpak/exports/share/applications",
-        f"/home/{username}/.local/share/flatpak/exports/share/applications"
-    ]
+    desktop_dirs = conf.app_dirs
     desktop_files = [
         str(file) for dir_ in desktop_dirs for file in Path(dir_).glob("*.desktop") if file.is_file()
     ]
@@ -70,9 +65,12 @@ def normal_mode():
 
         if name and exec_cmd:
             options.append(name)
-            exec_map[name] = exec_cmd
+            exec_map[name] = {"exec": exec_cmd, "env_path": ""}
 
-    options.extend([":w", ":d", ":q"])
+    options.extend(conf.app_names)
+    exec_map.update(conf.app_exec_map)
+
+    if not ":q" in options: options.extend([":w", ":d", ":q"])
     selection = run_fzf(options)
 
     if selection == ":w":
@@ -82,9 +80,19 @@ def normal_mode():
     elif selection == ":q":
         exit()
     elif selection in exec_map:
-        command = f"setsid {exec_map[selection]} > /dev/null 2>&1 &"
-        result = subprocess.run(command, shell=True, capture_output=True, text=True)
-        exit()
+        try:
+            path = os.environ["PATH"]
+            if exec_map[selection]["env_path"] != "":
+                os.environ["PATH"] = exec_map[selection]["env_path"]
+            command = f"setsid {exec_map[selection]["exec"]} > /dev/null 2>&1 &"
+            os.environ["PATH"] = path
+            result = subprocess.run(command, shell=True, capture_output=True, text=True)
+            if result.returncode != 0:
+                print(f"Error launching {selection}:\n{result.stderr}")
+            else:
+                exit()
+        except Exception as e:
+            print(f"Failed to launch {selection}: {e}")
 
 # Window mode: Focus a window
 def window_mode():
@@ -109,7 +117,7 @@ def window_mode():
             options.append(title)
             window_map[title] = window_id
 
-    options.extend([":n", ":d", ":q"])
+    if not ":q" in options: options.extend([":n", ":d", ":q"])
     selection = run_fzf(options)
 
     if selection == ":n":
@@ -128,17 +136,10 @@ def dashboard_mode():
     global current_mode
     current_mode = "dashboard"
 
-    if not Path(launcher_config).exists():
-        print(f"Config file not found at {launcher_config}")
-        exit()
+    options = conf.dashboard_names
+    exec_map = conf.dashboard_exec_map
 
-    with open(launcher_config) as f:
-        dashboards = json.load(f)
-
-    options = [d["name"] for d in dashboards]
-    exec_map = {d["name"]: d["exec"] for d in dashboards}
-
-    options.extend([":n", ":w", ":q"])
+    if not ":q" in options: options.extend([":n", ":w", ":q"])
     selection = run_fzf(options)
 
     if selection == ":n":
@@ -148,7 +149,11 @@ def dashboard_mode():
     elif selection == ":q":
         exit()
     elif selection in exec_map:
-        subprocess.run(exec_map[selection], shell=True)
+        path = os.environ["PATH"]
+        if exec_map[selection]["env_path"] != "":
+            os.environ["PATH"] = exec_map[selection]["env_path"]
+        subprocess.run(exec_map[selection]["exec"], shell=True)
+        os.environ["PATH"] = path
         dashboard_mode()
 
 # Start system info updater thread
@@ -156,4 +161,3 @@ threading.Thread(target=get_system_info, daemon=True).start()
 
 # Start in normal mode
 normal_mode()
-
