@@ -4,7 +4,7 @@ with lib;
 let
   launcher = pkgs.stdenv.mkDerivation {
     pname = "launcher";
-    version = "1.3.0";
+    version = "1.4.0";
     src = pkgs.fetchFromGitHub {
       owner = "gro-david";
       repo = "launcher";
@@ -15,7 +15,7 @@ let
       mkdir -p $out/bin
       mkdir -p $out/modules
       cp start.py launcher.py $out/
-      cp modules/system.py modules/read_conf.py modules/network.py $out/modules/
+      cp modules/system.py modules/read_conf.py modules/network.py modules/bluetooth.py modules/icons.py $out/modules/
 
       echo "#!/bin/sh" > $out/bin/start-launcher
       echo "python $out/start.py" >> $out/bin/start-launcher
@@ -24,6 +24,10 @@ let
       echo "#!/bin/sh" > $out/bin/start-launcher-network
       echo "python $out/modules/network.py" >> $out/bin/start-launcher-network
       chmod +x $out/bin/start-launcher-network
+
+      echo "#!/bin/sh" > $out/bin/start-launcher-bluetooth
+      echo "python $out/modules/bluetooth.py" >> $out/bin/start-launcher-bluetooth
+      chmod +x $out/bin/start-launcher-bluetooth
     '';
   };
 
@@ -76,7 +80,7 @@ in {
       launcher
       fzf
       pulseaudio
-      (python3.withPackages (ps: [ ps.psutil ]))
+      (python3.withPackages (ps: [ ps.psutil ps.rich ]))
     ];
 
     # Write launcher.json using builtins.toJSON for simplicity

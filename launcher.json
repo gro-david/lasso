@@ -14,9 +14,9 @@
 	"app_dirs": [],
 	"dashboard": [
 		{
-			"env_path": "0",
-			"name": "name1",
-			"exec": "exec1"
+			"env_path": "",
+			"name": "suspend",
+			"exec": "systemctl suspend; exit"
 		}
 	]
 }
