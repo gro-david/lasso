@@ -1,11 +1,13 @@
-# Launcher
-This is my quick and dirty fzf based keyboard application launcher, dashboard, and window switcher. It was designed to work with the niri wayland compositor.
+# 󰲅 FUSE
+## FUSE - FUSE Unifies System Essentials
+FUSE was designed to make my workflow with the [Niri](https://github.com/yalter/niri) WM more streamlined and efficient. It was inspired by a multi modal workflow, uniting an application launcher, a dashboard, and a window switcher. Additionally it includes a system bar. The main goal was simplicity and minimalism, which is accomplished by only relying on a terminal emulator to work.
 
 ## Features:
  - Fuzzy finding applications and launching them
  - Customization of dashboard commands, like network management, bluetooth, or a system monitor. Anything goes that has a shell or a TUI
  - Status in the launcher instead of a seperate bar, (eg: volume, battery, backlight or keyboard language)
  - Window switching in niri
+ - Custom tools for managing Bluetooth and WiFi connections is included. The fit the theme and style of FUSE. The can be started by starting the respective files in the modules directory.
 
 ### Normal mode:
 ![image](https://github.com/user-attachments/assets/e6cb6053-d83e-4861-a44b-1a7244e94dec)
@@ -30,7 +32,7 @@ This is my quick and dirty fzf based keyboard application launcher, dashboard, a
  -  Add the following rule to your niri config file:
 	```
 	window-rule {
-		match title="alacritty launcher"
+		match title="fuse"
 		open-focused true
 		open-floating true
 	}
@@ -40,9 +42,9 @@ This is my quick and dirty fzf based keyboard application launcher, dashboard, a
  ```
  [
  	{
- 		"name": "name of the entry",
-      		"exec": "command to execute"
-    	}
+  	"name": "name of the entry",
+    "exec": "command to execute"
+  }
  ]
  ```
  - The launcher starts in normal mode. You can switch to dashboard mode by selecting the entry `:d`, using `:w` will switch you to window mode
@@ -57,4 +59,10 @@ This is my quick and dirty fzf based keyboard application launcher, dashboard, a
 ## Installation
 On most distros you will be able to use the launcher by just cloning the repo and then running the `start.py` file
 
-On NixOS this should work too, but you can also use home-manager. You can just import the two files into home-manager. You can configure the dashboard using `launcher.nix`, a few entries will already be included by default. Then just rebuild your home. This will use the `nix` branch which already has some things set up to work with NixOS.
+On NixOS this should work too, but you can also use home-manager. You can just import the two files into home-manager. You can configure the dashboard using `launcher.nix`, a few entries will already be included by default. Then just rebuild your home. A flake will follow soon.
+
+## Future Goals
+I would like to make this project as hackable as possible, the goal is to make every aspect of the launcher customizable. For now the only options are to customize which apps appear, with which PATH they are launched and, what dashboard options are available (the PATH is customizable for these too). More documentation on these options will follow soon.
+
+## Documentation
+Coming soon...

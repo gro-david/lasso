@@ -4,11 +4,11 @@ with lib;
 let
   fuse = pkgs.stdenv.mkDerivation {
     pname = "fuse";
-    version = "1.4.0";
+    version = "1.4.1";
     src = pkgs.fetchFromGitHub {
       owner = "gro-david";
       repo = "fuse";
-      rev = "nix";
+      rev = "master";
       hash = "sha256-kpv0nt2zqzA9U5wCuZlr3zZK2xOxN5WwCIev/ht+zKg=";
     };
     installPhase = ''
@@ -18,15 +18,15 @@ let
       cp modules/system.py modules/read_conf.py modules/network.py modules/bluetooth.py modules/icons.py $out/modules/
 
       echo "#!/bin/sh" > $out/bin/start-fuse
-      echo "python $out/start.py" >> $out/bin/start-fuse
+      echo "python $out/start.py" >> $out/bin/fuse
       chmod +x $out/bin/start-fuse
 
       echo "#!/bin/sh" > $out/bin/start-fuse-network
-      echo "python $out/modules/network.py" >> $out/bin/start-fuse-network
+      echo "python $out/modules/network.py" >> $out/bin/fuse-network
       chmod +x $out/bin/start-fuse-network
 
       echo "#!/bin/sh" > $out/bin/start-fuse-bluetooth
-      echo "python $out/modules/bluetooth.py" >> $out/bin/start-fuse-bluetooth
+      echo "python $out/modules/bluetooth.py" >> $out/bin/fuse-bluetooth
       chmod +x $out/bin/start-fuse-bluetooth
     '';
   };

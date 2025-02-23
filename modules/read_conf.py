@@ -3,8 +3,8 @@ from pathlib import Path
 import json
 
 username = os.getlogin()
-config_path = f"/home/{username}/.config/launcher.json"
-# config_path = f"/home/macisajt/Data/python-projects/launcher/launcher.json"
+config_path = f"/home/{username}/.config/fuse.json"
+# config_path = f"/home/macisajt/Data/python-projects/fuse/fuse.json"
 
 if not Path(config_path).exists():
     print(f"Config file not found at {config_path}")
