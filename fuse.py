@@ -8,9 +8,6 @@ from pathlib import Path
 from modules import read_conf as conf
 from modules import system
 
-# Globals to track mode and system info
-current_mode = "normal"
-
 # Function to get system info
 def get_system_info():
     while True:
@@ -21,7 +18,6 @@ def get_system_info():
         remaining = f"󱧥 {time.strftime('%H:%M:%S', time.gmtime(remaining))}" if not remaining == -2 else ''
         charging = '󰚥' if plugged else '󰚦'
         keyboard_layout = system.get_keyboard()
-        #keyboard_layout = subprocess.getoutput("setxkbmap -query | grep layout | awk '{print $2}'")
 
         top_bar = f"󰥔 {time_now} | 󰃟 {brightness}% | 󰌌 {keyboard_layout} |  {volume}% | 󱐋 {percentage}% {remaining} {charging} "
         with open("/tmp/launcher_top_bar", "w") as f:
@@ -96,9 +92,6 @@ def normal_mode():
 
 # Window mode: Focus a window
 def window_mode():
-    global current_mode
-    current_mode = "window"
-
     window_data = subprocess.getoutput("niri msg windows")
     windows = window_data.split("\n\n")
 
@@ -109,7 +102,7 @@ def window_mode():
         lines = [line.strip() for line in window.split("\n") if line.strip()]
         window_id = next((line.split(" ", 2)[2].strip(":") for line in lines if line.startswith("Window ID")), None)
         title = next((line.split(": ", 1)[1] for line in lines if line.startswith("Title:")), None)
-        title = title.replace('"', '')
+        title = str(title).replace('"', '')
 
         if title == 'alacritty launcher': continue
 
@@ -133,9 +126,6 @@ def window_mode():
 
 # Dashboard mode: Launch configured apps
 def dashboard_mode():
-    global current_mode
-    current_mode = "dashboard"
-
     options = conf.dashboard_names
     exec_map = conf.dashboard_exec_map
 
