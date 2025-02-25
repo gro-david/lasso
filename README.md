@@ -1,5 +1,4 @@
-# 󰲅 FUSE
-## FUSE - FUSE Unifies System Essentials
+# FUSE - FUSE Unifies System Essentials
 FUSE was designed to make my workflow with the [Niri](https://github.com/yalter/niri) WM more streamlined and efficient. It was inspired by a multi modal workflow, uniting an application launcher, a dashboard, and a window switcher. Additionally it includes a system bar. The main goal was simplicity and minimalism, which is accomplished by only relying on a terminal emulator to work.
 
 ## Features:
