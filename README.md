@@ -31,7 +31,7 @@ FUSE was designed to make my workflow with the [Niri](https://github.com/yalter/
  -  Add the following rule to your niri config file:
 	```
 	window-rule {
-		match title="fuse"
+		match title="fuse" app-id="fuse"
 		open-focused true
 		open-floating true
 	}
