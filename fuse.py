@@ -1,29 +1,35 @@
 import os
-import subprocess
+import sys
 import json
-import threading
 import time
+import threading
+import subprocess
 from pathlib import Path
 
-from modules import read_conf as conf
 from modules import system
+from modules import read_conf as conf
+
+try:
+	# import hacks from the just added paths
+	sys.path.append(conf.hacks_path)
+	import hacks # type: ignore
+except Exception as e:
+	print("Could not import hacks. Please check the following error message, and open an issue if required.")
+	print(e)
 
 # Function to get system info
 def get_system_info():
-    while True:
-        time_now = time.strftime("%Y-%m-%d %H:%M:%S")
-        brightness = system.get_brightness()
-        volume = system.get_volume()
-        percentage, plugged, remaining = system.get_battery_state()
-        remaining = f"󱧥 {time.strftime('%H:%M:%S', time.gmtime(remaining))}" if not remaining == -2 else ''
-        charging = '󰚥' if plugged else '󰚦'
-        keyboard_layout = system.get_keyboard()
+	while True:
+		top_bar = ""
+		try:
+			top_bar = hacks.top_bar.get() # type: ignore
+		except Exception as e:
+			top_bar = hacks.get_fallback_top_bar() # type: ignore
 
-        top_bar = f"󰥔 {time_now} | 󰃟 {brightness}% | 󰌌 {keyboard_layout} |  {volume}% | 󱐋 {percentage}% {remaining} {charging} "
-        with open("/tmp/launcher_top_bar", "w") as f:
-            f.write(top_bar)
+		with open("/tmp/launcher_top_bar", "w") as f:
+			f.write(top_bar)
 
-        time.sleep(0.5)
+		time.sleep(0.5)
 
 def run_fzf(options):
     fzf_command = (
