@@ -6,7 +6,7 @@ import shutil
 def main():
     if shutil.which("nixGL"):
         subprocess.run(
-            ['nixGL', 'alacritty', '--title', 'fuse', '--class', 'fuse', '--print-events', '-e', 'python', str(pathlib.Path(__file__).parent.resolve().joinpath('fuse.py')) ],
+            ['nixGL', 'alacritty', '--hold', '--title', 'fuse', '--class', 'fuse', '--print-events', '-e', 'python', str(pathlib.Path(__file__).parent.resolve().joinpath('fuse.py')) ],
             capture_output=True,
             text=True
         )
@@ -16,8 +16,6 @@ def main():
                 capture_output=True,
                 text=True
         )
-
-
 
 if __name__ == "__main__":
     main()
