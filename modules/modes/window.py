@@ -19,7 +19,7 @@ def get_opt():
         title = next((line.split(": ", 1)[1] for line in lines if line.startswith("Title:")), None)
         title = str(title).replace('"', '')
 
-        if title == 'alacritty launcher': continue
+        if title == 'fuse': continue
 
         if window_id and title:
             options.append(title)

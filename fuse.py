@@ -52,7 +52,6 @@ def create_options(options):
         options.append(":q")
         options.extend(relevant_modes)
 
-
     selection = run_fzf(options)
 
     if selection == ":q": exit()
