@@ -18,6 +18,8 @@ except Exception as e:
     print("Could not import hacks. Please check the following error message, and open an issue if required.")
     print(e)
 
+FIFO_PATH = "/tmp/fuse_top_bar"
+
 # Function to get system info
 def get_system_info():
     while True:
@@ -27,7 +29,7 @@ def get_system_info():
         except Exception as e:
             top_bar = hacks.get_fallback_top_bar() # type: ignore
 
-        with open("/tmp/launcher_top_bar", "w") as f:
+        with open(FIFO_PATH, "w") as f:
             f.write(top_bar)
 
         time.sleep(0.5)
@@ -36,7 +38,7 @@ def get_system_info():
 def run_fzf(options):
     fzf_command = (
         "fzf --header-lines=0 --no-info "
-        "--preview 'while true; echo \"$(cat /tmp/launcher_top_bar)\"; sleep 0.5; end' "
+        f"--preview 'while true; echo \"$(cat {FIFO_PATH})\"; sleep 0.5; end' "
         "--preview-window=up:1:follow:wrap:noinfo"
     )
     fzf_input = "\n".join(options)
@@ -44,7 +46,7 @@ def run_fzf(options):
     return result.stdout.strip()
 
 # adds the additional options for quiting and switching modes. also change modes/quit if requested, otherwise return the selected option
-def create_options(options):
+def handle_modes(options):
     index = list(modes.keys()).index(mode)
     relevant_modes = list(modes.keys())
     relevant_modes.pop(index)
@@ -64,8 +66,10 @@ def run_mode(get_options, exec_selection):
     global mode
 
     mode, options = get_options()
-    selection = create_options(options)
+    selection = handle_modes(options)
     exec_selection(selection)
+
+mode = ''
 
 # define the builtin modes and add the custom ones, a global variable for storing the current mode is also created
 modes = {
@@ -74,15 +78,20 @@ modes = {
     ":d": lambda: run_mode(dashboard.get_opt, dashboard.exec_selection)
 }
 
+# hack modes are user defined modes
 hack_modes = {}
 for _mode in hacks.modes.modes: # type: ignore
     hack_modes[_mode] = lambda: run_mode(hacks.modes.modes[_mode]["get_opt"], hacks.modes.modes[_mode]["exec_selection"]) # type: ignore
 
+# add the hack modes to the dict of all modes
 modes.update(hack_modes)
 
-mode = ''
+# create a fifo queue on disk
+if not os.path.exists(FIFO_PATH):
+    os.mkfifo(FIFO_PATH)
 
 # Start system info updater thread
 threading.Thread(target=get_system_info, daemon=True).start()
 
+# start in normal mode
 modes[":n"]()

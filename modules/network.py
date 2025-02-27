@@ -30,10 +30,12 @@ def parse_networks():
 		line = line.split()
 		if len(line) <= 8: continue
 
+		name_end_index = line.index("Infra") - 1
+
 		bssid = line[0]
-		name = line[1]
-		bars = line[7]
-		security = line[8]
+		name = " ".join([line[i] for i in range(1, name_end_index)])
+		bars = line[name_end_index + 6]
+		security = line[name_end_index + 7]
 
 		if name == "--": continue
 		if not name in networks or (not networks[name]["active"] and active):
