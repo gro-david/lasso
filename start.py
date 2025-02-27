@@ -40,7 +40,7 @@ def check_focus_lost(process):
         process.wait()
 
 def init():
-    if os.path.isdir(f"/home/{os.getlogin()}/.config/fuse")
+    if os.path.isdir(f"/home/{os.getlogin()}/.config/fuse"): return
     shutil.copytree(os.path.join(os.path.dirname(__file__), "res"), f"/home/{os.getlogin()}/.config/fuse")
 
 if __name__ == "__main__":
