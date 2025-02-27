@@ -10,7 +10,7 @@
       system = "x86_64-linux";
       pkgs = import nixpkgs { inherit system; };
     in {
-      packages.${system}.fuse = pkgs.stdenv.mkDerivation {
+      packages.${system}.default = pkgs.stdenv.mkDerivation {
         pname = "fuse";
         version = "1.5.0";
         src = ./.;
@@ -85,7 +85,7 @@
 
           config = mkIf cfg.enable {
             home.packages = with pkgs; [
-              fuse
+              self.packages.${system}.default
               fzf
               pulseaudio
               (pkgs.python3.withPackages (ps: [ ps.psutil ps.rich ]))
