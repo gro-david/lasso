@@ -14,7 +14,7 @@
         pname = "fuse";
         version = "1.5.0";
         src = ./.;
-        buildInputs = [ pkgs.python3 ];
+        buildInputs = [ pkgs.python3 pkgs.alacritty ];
         installPhase = ''
           mkdir -p $out/bin
           mkdir -p $out/modules
@@ -89,7 +89,6 @@
               self.packages.${system}.default
               fzf
               pulseaudio
-              alacritty
               (pkgs.python3.withPackages (ps: [ ps.psutil ps.rich ]))
             ];
 
