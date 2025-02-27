@@ -83,8 +83,7 @@
               };
             };
           };
-
-          config = mkIf cfg.enable {
+          let {
             hacks_init = ''
               # DO NOT MODIFY THIS FILE
               # This file is responsible for being able to use any hacks, and for the fallback behavior of the top bar.
@@ -207,7 +206,8 @@
 
                         modes[cmd] = func
             '';
-
+          in {
+          config = mkIf cfg.enable {
             home.packages = with pkgs; [
               self.packages.${system}.default
               fzf
@@ -225,6 +225,7 @@
             xdg.configFile."fuse/hacks/system.py".text = system_py;
             xdg.configFile."fuse/hacks/modes/__init.py__".text = modes_init;
           };
+        };
         };
       };
     };
