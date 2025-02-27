@@ -18,11 +18,11 @@
         installPhase = ''
           mkdir -p $out/bin
           mkdir -p $out/modules
-          mkdir -p ~/.config/fuse
+          # mkdir -p ~/.config/fuse
 
           cp start.py fuse.py $out/
           cp -r modules/ $out/modules/
-          cp hacks ~/.config/fuse/
+          # cp hacks ~/.config/fuse/
 
           echo "#!/bin/sh" > $out/bin/fuse
           echo "python $out/start.py" >> $out/bin/fuse
