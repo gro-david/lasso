@@ -13,7 +13,9 @@ from modules.modes import dashboard, normal, window
 try:
     # import hacks from the just added paths
     sys.path.append(conf.hacks_path)
+    print(sys.path)
     import hacks # type: ignore
+    print(hacks)
 except Exception as e:
     print("Could not import hacks. Please check the following error message, and open an issue if required.")
     print(e)
