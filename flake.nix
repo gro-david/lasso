@@ -1,21 +1,19 @@
 {
-  description = "Fuse Package Flake";
+  description = "Fuse Project";
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-24.11";
-    fuse-src.url = "github:gro-david/fuse";
   };
 
-  outputs = { self, nixpkgs, fuse-src }:
+  outputs = { self, nixpkgs }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs { inherit system; };
-      lib = nixpkgs.lib;
     in {
       packages.${system}.fuse = pkgs.stdenv.mkDerivation {
         pname = "fuse";
         version = "1.5.0";
-        src = fuse-src;
+        src = ./.;
         installPhase = ''
           mkdir -p $out/bin
           mkdir -p $out/modules
@@ -90,7 +88,7 @@
               fuse
               fzf
               pulseaudio
-              (python3.withPackages (ps: [ ps.psutil ps.rich ]))
+              (pkgs.python3.withPackages (ps: [ ps.psutil ps.rich ]))
             ];
 
             # Write launcher.json using builtins.toJSON for simplicity
