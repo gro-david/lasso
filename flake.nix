@@ -14,13 +14,14 @@
         pname = "fuse";
         version = "1.5.0";
         src = ./.;
+        buildInputs = [ pkgs.python3 ];
         installPhase = ''
           mkdir -p $out/bin
           mkdir -p $out/modules
           mkdir -p ~/.config/fuse
 
           cp start.py fuse.py $out/
-          cp modules/ $out/modules/
+          cp -r modules/ $out/modules/
           cp hacks ~/.config/fuse/
 
           echo "#!/bin/sh" > $out/bin/fuse
