@@ -155,14 +155,14 @@
                               self.message = "This mode already exists. Check your hacks."
                               super().__init__(self.message)
 
-                              modes = {}
-                              for module in __all__:
-                                  cmd = sys.modules[f"modes.{module}"].command
-                                  func = sys.modules[f"modes.{module}"].start
+                        modes = {}
+                        for module in __all__:
+                            cmd = sys.modules[f"modes.{module}"].command
+                            func = sys.modules[f"modes.{module}"].start
 
-                                  if cmd in modes: raise ModeExistsException()
+                            if cmd in modes: raise ModeExistsException()
 
-                                  modes[cmd] = func
+                            modes[cmd] = func
                       '';
         in {
           options = {
