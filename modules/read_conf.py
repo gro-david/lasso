@@ -3,9 +3,9 @@ from pathlib import Path
 import json
 
 username = os.getlogin()
-# config_path = f"/home/{username}/.config/fuse/fuse.json"
+config_path = f"/home/{username}/.config/fuse/fuse.json"
 hacks_path = f"/home/{username}/.config/fuse/"
-config_path = f"/home/macisajt/Data/python-projects/fuse/conf/fuse.json"
+# config_path = f"/home/macisajt/Data/python-projects/fuse/conf/fuse.json"
 # hacks_path = f"/home/macisajt/Data/python-projects/fuse/fuse/"
 
 if not Path(config_path).exists():
