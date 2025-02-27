@@ -20,13 +20,12 @@
           mkdir -p $out/modules
           # mkdir -p ~/.config/fuse
 
-          cp start.py fuse.py $out/
+          cp exec.py fuse.py $out/
           cp -r modules/ $out/
           cp -r res $out/
-          # cp hacks ~/.config/fuse/
 
           echo "#!/bin/sh" > $out/bin/fuse
-          echo "python $out/start.py" >> $out/bin/fuse
+          echo "python $out/exec.py" >> $out/bin/fuse
           chmod +x $out/bin/fuse
 
           echo "#!/bin/sh" > $out/bin/fuse-network
