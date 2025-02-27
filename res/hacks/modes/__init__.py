@@ -20,9 +20,10 @@ class ModeExistsException(Exception):
 
 modes = {}
 for module in __all__:
-	cmd = sys.modules[f"modes.{module}"].command
-	func = sys.modules[f"modes.{module}"].start
+	cmd = sys.modules[f"hacks.modes.{module}"].COMMAND
+	opt = sys.modules[f"hacks.modes.{module}"].get_opt
+	exec = sys.modules[f"hacks.modes.{module}"].exec_selection
 
 	if cmd in modes: raise ModeExistsException()
 
-	modes[cmd] = func
+	modes[cmd] = {"opt": opt, "exec": exec}

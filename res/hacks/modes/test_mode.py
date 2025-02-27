@@ -1,5 +1,7 @@
-command = ":t"
-name = "test"
+COMMAND = ":t"
 
-def start():
+def get_opt():
 	pass
+
+def exec_selection(selection):
+    pass
