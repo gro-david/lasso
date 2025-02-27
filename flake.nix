@@ -89,6 +89,7 @@
               self.packages.${system}.default
               fzf
               pulseaudio
+              alacritty
               (pkgs.python3.withPackages (ps: [ ps.psutil ps.rich ]))
             ];
 
