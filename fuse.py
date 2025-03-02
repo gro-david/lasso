@@ -13,14 +13,12 @@ from modules.modes import dashboard, normal, window
 try:
     # import hacks from the just added paths
     sys.path.append(conf.hacks_path)
-    print(sys.path)
     import hacks # type: ignore
-    print(hacks)
 except Exception as e:
     print("Could not import hacks. Please check the following error message, and open an issue if required.")
     print(e)
 
-FIFO_PATH = "/tmp/fuse_top_bar"
+TOP_BAR_PATH = "/tmp/fuse_top_bar"
 
 # Function to get system info
 def get_system_info():
@@ -31,7 +29,7 @@ def get_system_info():
         except Exception as e:
             top_bar = hacks.get_fallback_top_bar() # type: ignore
 
-        with open(FIFO_PATH, "w") as f:
+        with open(TOP_BAR_PATH, "w") as f:
             f.write(top_bar)
 
         time.sleep(0.5)
@@ -40,7 +38,7 @@ def get_system_info():
 def run_fzf(options):
     fzf_command = (
         "fzf --header-lines=0 --no-info "
-        f"--preview 'while true; echo \"$(cat {FIFO_PATH})\"; sleep 0.5; end' "
+        f"--preview 'while true; echo \"$(cat {TOP_BAR_PATH})\"; sleep 0.5; end' "
         "--preview-window=up:1:follow:wrap:noinfo"
     )
     fzf_input = "\n".join(options)
@@ -87,10 +85,6 @@ for _mode in hacks.modes.modes: # type: ignore
 
 # add the hack modes to the dict of all modes
 modes.update(hack_modes)
-
-# create a fifo queue on disk
-if not os.path.exists(FIFO_PATH):
-    os.mkfifo(FIFO_PATH)
 
 # Start system info updater thread
 threading.Thread(target=get_system_info, daemon=True).start()
