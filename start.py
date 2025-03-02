@@ -16,7 +16,7 @@ def main():
         check_focus_lost(process)
     else:
         process = subprocess.Popen(
-            ['alacritty', '--title', 'fuse', '--class', 'fuse', '--print-events', '-e', 'python', str(pathlib.Path(__file__).parent.resolve().joinpath('fuse.py')) ],
+            ['alacritty', '--hold', '--title', 'fuse', '--class', 'fuse', '--print-events', '-e', 'python', str(pathlib.Path(__file__).parent.resolve().joinpath('fuse.py')) ],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True

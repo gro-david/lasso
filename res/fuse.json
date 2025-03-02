@@ -1,0 +1,31 @@
+{
+  "app_dirs": [],
+  "apps": [
+    { "env_path": "", "exec": "zen-browser", "name": "Zen Browser" },
+    { "env_path": "", "exec": "mcreator", "name": "MCreator" },
+    {
+      "env_path": "/sbin",
+      "exec": "waydroid app launch com.mojang.minecraftedu",
+      "name": "Minecraft Education"
+    },
+    { "env_path": "", "exec": "godot4", "name": "Godot" },
+    { "env_path": "", "exec": "zeditor", "name": "Zed Editor" },
+    { "env_path": "", "exec": "alacritty -e nvim", "name": "nvim" },
+    { "env_path": "", "exec": "qutebrowser", "name": "qutebrowser" },
+    { "env_path": "", "exec": "alacritty -e ranger", "name": "ranger" },
+    { "env_path": "", "exec": "orca-slicer", "name": "Orca Slicer" },
+    { "env_path": "", "exec": "spotify", "name": "Spotify" }
+  ],
+  "dashboard": [
+    { "env_path": "", "exec": "reboot", "name": "Reboot" },
+    { "env_path": "", "exec": "shutdown now", "name": "Shutdown" },
+    { "env_path": "", "exec": "systemctl suspend", "name": "Suspend" },
+    {
+      "env_path": "",
+      "exec": "fuse-bluetooth",
+      "name": "Bluetooth Management"
+    },
+    { "env_path": "", "exec": "fuse-network", "name": "Network Management" },
+    { "env_path": "", "exec": "htop", "name": "System Monitor" }
+  ]
+}
