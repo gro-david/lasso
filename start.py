@@ -3,20 +3,28 @@ import subprocess
 import sys
 import pathlib
 import shutil
+import argparse
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-d', action='store_true')
+    args = parser.parse_args()
     init()
     if shutil.which("nixGL"):
+        command = ['nixGL', 'alacritty',  '--title', 'fuse', '--class', 'fuse', '--print-events', '-e', 'python', str(pathlib.Path(__file__).parent.resolve().joinpath('fuse.py')) ]
+        if args.d: command.insert(2, '--hold')
         process = subprocess.Popen(
-            ['nixGL', 'alacritty', '--hold', '--title', 'fuse', '--class', 'fuse', '--print-events', '-e', 'python', str(pathlib.Path(__file__).parent.resolve().joinpath('fuse.py')) ],
+            command,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True
         )
         check_focus_lost(process)
     else:
+        command = ['alacritty',  '--title', 'fuse', '--class', 'fuse', '--print-events', '-e', 'python', str(pathlib.Path(__file__).parent.resolve().joinpath('fuse.py')) ]
+        if args.d: command.insert(2, '--hold')
         process = subprocess.Popen(
-            ['alacritty', '--hold', '--title', 'fuse', '--class', 'fuse', '--print-events', '-e', 'python', str(pathlib.Path(__file__).parent.resolve().joinpath('fuse.py')) ],
+            command,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True
