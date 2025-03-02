@@ -65,10 +65,15 @@ The configuration is written in plain json and can is usually found under `~.con
   - `"dashboard": []`, This is a list containing anythinhg that should be included in your dashboard. It uses the same format as the applications.
 
 FUSE is designed to be hackable. You can customize a few things up to now, with more coming in the future. If there is anything you would like to customize but is not customizable, please open an issue.
+
 These user provided modifications are called hacks and should be placed under `~/.config/fuse/hacks`. For now there are two types of hacks: modes and top_bar. If you would like to customize the status bar shown in FUSE create a file called `top_bar.py` and place it in the root of the hacks directory. Please do _NOT_ remove or modify the `__init__.py` and `system.py` files. These are required for the basic functionality of FUSE.
+
 Your `top_bar.py` only needs to include a method `get()` which should return your desired system bar. This function will be called automatically multiple times by FUSE, so you do not need to do anything else.
+
 Creating modes is also relatively simple and done in python. These will be loaded from `~/.config/fuse/hacks/modes`. Please do _NOT_ remove or modify the `__init__.py` file located in this directory, as this will break the loading of these hacks.
+
 Each mode should include a constant variable called `COMMAND` which will be the command used to switch to this mode. It usually starts with a colon (:) and is only a single letter, but there is nothing stopping you of naming it something else.
+
 There are two methods required by FUSE. `get_opt()` should return `COMMAND` and a list of options that should be selectable. `exec_selection(selection)` will be called by FUSE when the user selects an entry. This should only handle your custom options, you do not need to include handling of mode switching commands.
 
 Example top bar:
