@@ -1,6 +1,6 @@
 # Maintainer: David Gro <gro.david.d@gmail.com>
 pkgname=fuse-launcher
-pkgver=r71.35db971
+pkgver=r72.90ba235
 pkgrel=1
 pkgdesc="FUSE Unites System Essentials"
 arch=('x86_64')
