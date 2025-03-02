@@ -25,7 +25,7 @@ package() {
     cp -r {modules,res,fuse.py,start.py} "$pkgdir/usr/share/$pkgname"
 
     # Create binary files
-    install -Dm755 /dev/stdin "$pkgdir/usr/bin/fuse-start" <<EOF
+    install -Dm755 /dev/stdin "$pkgdir/usr/bin/fuset" <<EOF
 #!/bin/bash
 python /usr/share/$pkgname/start.py "\$@"
 EOF
