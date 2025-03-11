@@ -51,7 +51,7 @@ On most distros you will be able to use the launcher by just cloning the repo an
 
 On NixOS this should work too, but you can also use home-manager. You can just import the two files into home-manager. You can configure the dashboard using `launcher.nix`, a few entries will already be included by default. Then just rebuild your home. A flake will follow soon.
 
-For Arch Linux, just download the PKGBUILD and run the command `makepkgs -si`, this will install it to your system using pacman. If we get a few more users I will consider publishing to the AUR, but for now this is not possible.
+For Arch Linux, just install the fuse-launcher package from the AUR. 
 
 ## Documentation
 After installing you should be able to start the program by executing the `start.py` file or on Nix/Arch by executing the `fuse` command.
