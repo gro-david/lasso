@@ -1,6 +1,6 @@
 # Maintainer: David Gro <gro.david.d@gmail.com>
 pkgname=lasso-launcher
-pkgver=r74.5ce6c26
+pkgver=r78.edf4cb4
 pkgrel=1
 pkgdesc="LASSO Actively Simplifies System Operations. LASSO is a hackable desktop launcher, combined with a dashboard and system bar. It features a simple terminal based interface."
 arch=('any')
@@ -26,7 +26,7 @@ package() {
     cp -r {modules,res,lasso.py,start.py} "$pkgdir/usr/share/$pkgname"
 
     # Create binary files
-    install -Dm755 /dev/stdin "$pkgdir/usr/bin/fuse" <<EOF
+    install -Dm755 /dev/stdin "$pkgdir/usr/bin/lasso" <<EOF
 #!/bin/bash
 python /usr/share/$pkgname/start.py "\$@"
 EOF

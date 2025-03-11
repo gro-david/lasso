@@ -18,7 +18,7 @@ except Exception as e:
     print("Could not import hacks. Please check the following error message, and open an issue if required.")
     print(e)
 
-TOP_BAR_PATH = "/tmp/fuse_top_bar"
+TOP_BAR_PATH = "/tmp/lasso_top_bar"
 
 # Function to get system info
 def get_system_info():
