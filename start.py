@@ -11,7 +11,7 @@ def main():
     args = parser.parse_args()
     init()
     if shutil.which("nixGL"):
-        command = ['nixGL', 'alacritty',  '--title', 'fuse', '--class', 'fuse', '--print-events', '-e', 'python', str(pathlib.Path(__file__).parent.resolve().joinpath('fuse.py')) ]
+        command = ['nixGL', 'alacritty',  '--title', 'lasso', '--class', 'lasso', '--print-events', '-e', 'python', str(pathlib.Path(__file__).parent.resolve().joinpath('lasso.py')) ]
         if args.d: command.insert(2, '--hold')
         process = subprocess.Popen(
             command,
@@ -21,7 +21,7 @@ def main():
         )
         check_focus_lost(process)
     else:
-        command = ['alacritty',  '--title', 'fuse', '--class', 'fuse', '--print-events', '-e', 'python', str(pathlib.Path(__file__).parent.resolve().joinpath('fuse.py')) ]
+        command = ['alacritty',  '--title', 'lasso', '--class', 'lasso', '--print-events', '-e', 'python', str(pathlib.Path(__file__).parent.resolve().joinpath('lasso.py')) ]
         if args.d: command.insert(2, '--hold')
         process = subprocess.Popen(
             command,
@@ -48,8 +48,8 @@ def check_focus_lost(process):
         process.wait()
 
 def init():
-    if os.path.isdir(f"/home/{os.getlogin()}/.config/fuse"): return
-    shutil.copytree(os.path.join(os.path.dirname(__file__), "res"), f"/home/{os.getlogin()}/.config/fuse")
+    if os.path.isdir(f"/home/{os.getlogin()}/.config/lasso"): return
+    shutil.copytree(os.path.join(os.path.dirname(__file__), "res"), f"/home/{os.getlogin()}/.config/lasso")
 
 if __name__ == "__main__":
     main()
