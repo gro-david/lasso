@@ -12,10 +12,10 @@
     { "env_path": "", "exec": "systemctl suspend", "name": "Suspend" },
     {
       "env_path": "",
-      "exec": "fuse-bluetooth",
+      "exec": "lasso-bluetooth",
       "name": "Bluetooth Management"
     },
-    { "env_path": "", "exec": "fuse-network", "name": "Network Management" },
+    { "env_path": "", "exec": "lasso-network", "name": "Network Management" },
     { "env_path": "", "exec": "htop", "name": "System Monitor" }
   ]
 }

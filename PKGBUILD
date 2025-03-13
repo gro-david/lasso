@@ -1,6 +1,6 @@
 # Maintainer: David Gro <gro.david.d@gmail.com>
 pkgname=lasso-launcher
-pkgver=r78.edf4cb4
+pkgver=r80.80966f0
 pkgrel=1
 pkgdesc="LASSO Actively Simplifies System Operations. LASSO is a hackable desktop launcher, combined with a dashboard and system bar. It features a simple terminal based interface."
 arch=('any')

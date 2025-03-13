@@ -11,7 +11,9 @@ def main():
     args = parser.parse_args()
     init()
     if shutil.which("nixGL"):
-        command = ['nixGL', 'alacritty',  '--title', 'lasso', '--class', 'lasso', '--print-events', '-e', 'python', str(pathlib.Path(__file__).parent.resolve().joinpath('lasso.py')) ]
+        no_wal_command = ['nixGL', 'alacritty',  '--title', 'lasso', '--class', 'lasso', '--print-events', '-e', 'python', str(pathlib.Path(__file__).parent.resolve().joinpath('lasso.py')) ]
+        wal_command = ['nixGL', 'alacritty',  '--title', 'lasso', '--class', 'lasso', '--print-events', '-e', 'fish', '-c', f"wal -Rqn && python {str(pathlib.Path(__file__).parent.resolve().joinpath('lasso.py'))}" ] 
+        command = wal_command if shutil.which("wal") else no_wal_command
         if args.d: command.insert(2, '--hold')
         process = subprocess.Popen(
             command,
@@ -21,7 +23,9 @@ def main():
         )
         check_focus_lost(process)
     else:
-        command = ['alacritty',  '--title', 'lasso', '--class', 'lasso', '--print-events', '-e', 'python', str(pathlib.Path(__file__).parent.resolve().joinpath('lasso.py')) ]
+        wal_command = ['alacritty',  '--title', 'lasso', '--class', 'lasso', '--print-events', '-e', 'fish', '-c', f"wal -Rqn && python {str(pathlib.Path(__file__).parent.resolve().joinpath('lasso.py'))}" ] 
+        no_wal_command = ['alacritty',  '--title', 'lasso', '--class', 'lasso', '--print-events', '-e', 'python', str(pathlib.Path(__file__).parent.resolve().joinpath('lasso.py')) ]
+        command = wal_command if shutil.which("wal") else no_wal_command
         if args.d: command.insert(2, '--hold')
         process = subprocess.Popen(
             command,
