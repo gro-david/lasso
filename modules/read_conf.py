@@ -5,8 +5,6 @@ import json
 username = os.getlogin()
 config_path = f"/home/{username}/.config/lasso/lasso.json"
 hacks_path = f"/home/{username}/.config/lasso/"
-# config_path = f"/home/macisajt/Data/python-projects/fuse/conf/fuse.json"
-# hacks_path = f"/home/macisajt/Data/python-projects/fuse/fuse/"
 
 if not Path(config_path).exists():
     print(f"Config file not found at {config_path}")
@@ -24,3 +22,9 @@ app_names = [elem["name"] for elem in apps]
 app_exec_map = {elem["name"]: {"exec": elem["exec"], "env_path": elem["env_path"]} for elem in apps}
 
 app_dirs = config["app_dirs"]
+
+use_nixGL = config["use_nixGL"]
+use_wal = config["use_wal"]
+update_interval = float(config["update_interval"])
+
+device = config["device"]

@@ -1,4 +1,6 @@
 {
+  "use_nixGL": false,
+  "use_wal": true,
   "app_dirs": [],
   "apps": [
     { "env_path": "", "exec": "firefox", "name": "Firefox" },

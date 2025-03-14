@@ -17,17 +17,19 @@ def run_fzf(options, mode):
         )
     result = subprocess.run(fzf_command, input=fzf_input, shell=True, capture_output=True, text=True)
     return result.stdout.strip()
+
 def handle_modes(options):
     index = list(modes.keys()).index(mode)
     relevant_modes = list(modes.keys())
     relevant_modes.pop(index)
     if not ":q" in options:
-        options.append(":q")
+        options.extend([":q", ":r"])
         options.extend(relevant_modes)
 
     selection = run_fzf(options, mode_strings[mode])
 
     if selection == ":q": exit()
+    elif selection == ":r": modes[mode]()
     elif selection in modes:
         modes[selection]()
         return ""

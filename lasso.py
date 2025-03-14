@@ -32,13 +32,13 @@ def get_system_info():
         with open(TOP_BAR_PATH, "w") as f:
             f.write(top_bar)
 
-        time.sleep(0.5)
+        time.sleep(conf.update_interval)
 
 # runs the fzf command with the correct status and options. finally returns the selected value
 def run_fzf(options):
     fzf_command = (
         "fzf --header-lines=0 --no-info "
-        f"--preview 'while true; echo \"$(cat {TOP_BAR_PATH})\"; sleep 0.5; end' "
+        f"--preview 'while true; echo \"$(cat {TOP_BAR_PATH})\"; sleep {str(conf.update_interval)}; end' "
         "--preview-window=up:1:follow:wrap:noinfo"
     )
     fzf_input = "\n".join(options)
