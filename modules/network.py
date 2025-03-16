@@ -1,7 +1,7 @@
 import re
 import subprocess
 
-from modules import read_conf
+import read_conf
 
 def run_fzf(options):
     fzf_input = "\n".join(options)
