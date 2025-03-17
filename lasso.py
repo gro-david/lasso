@@ -19,6 +19,8 @@ except Exception as e:
     print(e)
 
 TOP_BAR_PATH = "/tmp/lasso_top_bar"
+FISH_COMMAND = f"--preview 'while true; echo \"$(cat {TOP_BAR_PATH})\"; sleep {str(conf.update_interval)}; end' "
+BASH_ZSH_COMMAND = f"--preview 'while true; do echo \"$(cat {TOP_BAR_PATH})\"; sleep {str(conf.update_interval)}; done' "
 
 # Function to get system info
 def get_system_info():

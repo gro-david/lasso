@@ -1,6 +1,8 @@
 import os
-from pathlib import Path
 import json
+import shutil
+import errors
+from pathlib import Path
 
 username = os.getlogin()
 config_path = f"/home/{username}/.config/lasso/lasso.json"
@@ -28,3 +30,17 @@ use_wal = config["use_wal"]
 update_interval = float(config["update_interval"])
 
 device = config["device"]
+
+shell = config["shell"]
+match shell:
+    case "auto":
+        if shutil.which("fish"): shell = "fish"
+        elif shutil.which("zsh"): shell = "zsh"
+        elif shutil.which("bash"): shell = "bash"
+        else:
+            errors.ShellError()
+    case "fish": pass
+    case "bash": pass
+    case "zsh": pass
+    case _:
+        errors.ShellError()
