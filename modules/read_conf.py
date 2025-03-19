@@ -17,11 +17,11 @@ with open(config_path) as f:
 
 dashboards = config["dashboard"]
 dashboard_names = [elem["name"] for elem in dashboards]
-dashboard_exec_map = {elem["name"]: {"exec": elem["exec"], "env_path": elem["env_path"]} for elem in dashboards}
+dashboard_exec_map = {elem["name"]: {"exec": elem["exec"], "env_path": elem["env_path"] if "env_path" in elem else ""} for elem in dashboards}
 
 apps = config["apps"]
 app_names = [elem["name"] for elem in apps]
-app_exec_map = {elem["name"]: {"exec": elem["exec"], "env_path": elem["env_path"]} for elem in apps}
+app_exec_map = {elem["name"]: {"exec": elem["exec"], "env_path": elem["env_path"] if "env_path" in elem else ""} for elem in apps}
 
 app_dirs = config["app_dirs"]
 
