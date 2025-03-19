@@ -4,21 +4,20 @@
   "shell": "auto",
   "app_dirs": [],
   "apps": [
-    { "env_path": "", "exec": "firefox", "name": "Firefox" },
-    { "env_path": "", "exec": "alacritty -e nvim", "name": "nvim" },
-    { "env_path": "", "exec": "alacritty -e ranger", "name": "ranger" },
-    { "env_path": "", "exec": "spotify", "name": "Spotify" }
+    { "exec": "firefox", "name": "Firefox" },
+    { "exec": "alacritty -e nvim", "name": "nvim" },
+    { "exec": "alacritty -e ranger", "name": "ranger" },
+    { "exec": "spotify", "name": "Spotify" }
   ],
   "dashboard": [
-    { "env_path": "", "exec": "reboot", "name": "Reboot" },
-    { "env_path": "", "exec": "shutdown now", "name": "Shutdown" },
-    { "env_path": "", "exec": "systemctl suspend", "name": "Suspend" },
+    { "exec": "reboot", "name": "Reboot" },
+    { "exec": "shutdown now", "name": "Shutdown" },
+    { "exec": "systemctl suspend", "name": "Suspend" },
     {
-      "env_path": "",
       "exec": "lasso-bluetooth",
       "name": "Bluetooth Management"
     },
-    { "env_path": "", "exec": "lasso-network", "name": "Network Management" },
-    { "env_path": "", "exec": "htop", "name": "System Monitor" }
+    { "exec": "lasso-network", "name": "Network Management" },
+    { "exec": "htop", "name": "System Monitor" }
   ]
 }
