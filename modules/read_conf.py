@@ -1,7 +1,7 @@
 import os
 import json
 import shutil
-import errors
+from . import errors
 from pathlib import Path
 
 username = os.getlogin()

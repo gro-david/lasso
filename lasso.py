@@ -6,21 +6,21 @@ import threading
 import subprocess
 from pathlib import Path
 
-from modules import system
-from modules import read_conf as conf
+from modules import read_conf, system
 from modules.modes import dashboard, normal, window
 
 try:
     # import hacks from the just added paths
-    sys.path.append(conf.hacks_path)
+    sys.path.append(read_conf.hacks_path)
     import hacks # type: ignore
 except Exception as e:
     print("Could not import hacks. Please check the following error message, and open an issue if required.")
     print(e)
 
 TOP_BAR_PATH = "/tmp/lasso_top_bar"
-FISH_COMMAND = f"--preview 'while true; echo \"$(cat {TOP_BAR_PATH})\"; sleep {str(conf.update_interval)}; end' "
-BASH_ZSH_COMMAND = f"--preview 'while true; do echo \"$(cat {TOP_BAR_PATH})\"; sleep {str(conf.update_interval)}; done' "
+FISH_COMMAND = f"--preview 'while true; echo \"$(cat {TOP_BAR_PATH})\"; sleep {str(read_conf.update_interval)}; end' "
+BASH_ZSH_COMMAND = f"--preview 'while true; do echo \"$(cat {TOP_BAR_PATH})\"; sleep {str(read_conf.update_interval)}; done' "
+FZF_STATUS_COMMAND = FISH_COMMAND if read_conf.shell == "fish" else BASH_ZSH_COMMAND
 
 # Function to get system info
 def get_system_info():
@@ -34,13 +34,13 @@ def get_system_info():
         with open(TOP_BAR_PATH, "w") as f:
             f.write(top_bar)
 
-        time.sleep(conf.update_interval)
+        time.sleep(read_conf.update_interval)
 
 # runs the fzf command with the correct status and options. finally returns the selected value
 def run_fzf(options):
     fzf_command = (
         "fzf --header-lines=0 --no-info "
-        f"--preview 'while true; echo \"$(cat {TOP_BAR_PATH})\"; sleep {str(conf.update_interval)}; end' "
+        f"{FZF_STATUS_COMMAND}"
         "--preview-window=up:1:follow:wrap:noinfo"
     )
     fzf_input = "\n".join(options)
