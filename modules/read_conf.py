@@ -1,8 +1,12 @@
 import os
 import json
 import shutil
-from . import errors
 from pathlib import Path
+
+try:
+    import errors
+except Exception as e:
+    from modules import errors
 
 username = os.getlogin()
 config_path = f"/home/{username}/.config/lasso/lasso.json"

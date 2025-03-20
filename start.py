@@ -17,10 +17,10 @@ def main():
     no_wal_command = ['alacritty',  '--title', 'lasso', '--class', 'lasso', '--print-events', '-e', 'python', str(pathlib.Path(__file__).parent.resolve().joinpath('lasso.py')) ]
     command = wal_command if shutil.which("wal") and read_conf.use_wal else no_wal_command
 
+    if args.d: command.insert(1, '--hold')
     if shutil.which("nixGL") and read_conf.use_nixGL:
        command.insert(0, "nixGL")
 
-    if args.d: command.insert(2, '--hold')
     process = subprocess.Popen(
         command,
         stdout=subprocess.PIPE,
