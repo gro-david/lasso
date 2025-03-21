@@ -2,6 +2,7 @@ import os
 import sys
 import json
 import time
+import argparse
 import threading
 import subprocess
 from pathlib import Path
@@ -91,5 +92,9 @@ modes.update(hack_modes)
 # Start system info updater thread
 threading.Thread(target=get_system_info, daemon=True).start()
 
+parser = argparse.ArgumentParser()
+parser.add_argument("-m", "--mode")
+args = parser.parse_args()
+
 # start in normal mode
-modes[":n"]()
+modes[":n" if args.mode not in modes else args.mode]()
