@@ -20,7 +20,7 @@ def main():
     no_wal_command = ['alacritty',  '--title', 'lasso', '--class', 'lasso', '--print-events', '-e', 'python', str(pathlib.Path(__file__).parent.resolve().joinpath('lasso.py')), "-m", args.mode ]
     command = wal_command if shutil.which("wal") and read_conf.use_wal else no_wal_command
 
-    if args.d: command.insert(1, '--hold')
+    if args.debug: command.insert(1, '--hold')
     if shutil.which("nixGL") and read_conf.use_nixGL:
        command.insert(0, "nixGL")
 
