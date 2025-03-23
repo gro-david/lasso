@@ -11,13 +11,28 @@ def main():
     parser = argparse.ArgumentParser(prog='lasso')
     parser.add_argument('-d', '--debug', action='store_true', help="Enable debug. This keeps the alacritty window open, and shows errors.")
     parser.add_argument('-m', '--mode', help="Pass in the shorthand of a mode (eg. ':d' for dashboard mode) in which LASSO should start.")
+    parser.add_argument('-n', '--network', action='store_true', help="Start the LASSO network selector instead of the launcher.")
+    parser.add_argument('-b', '--bluetooth', action='store_true', help='Start the LASSO bluetooth selector instead of the launcher.')
     args = parser.parse_args()
-    args.mode = ":n" if args.mode == None else args.mode
+
+    if args.network ^ args.bluetooth ^ (args.mode == ''):
+        print('The parameters "-b/--bluetooth", "-n/--network" and "-m/--mode" are mutually exclusive!')
+        exit()
 
     init()
 
-    wal_command = ['alacritty',  '--title', 'lasso', '--class', 'lasso', '--print-events', '-e', 'fish', '-c', f"wal -Rqn; python {str(pathlib.Path(__file__).parent.resolve().joinpath('lasso.py'))} -m {args.mode}"  ]
-    no_wal_command = ['alacritty',  '--title', 'lasso', '--class', 'lasso', '--print-events', '-e', 'python', str(pathlib.Path(__file__).parent.resolve().joinpath('lasso.py')), "-m", args.mode ]
+    exec_path = str(pathlib.Path(__file__).parent.resolve().joinpath('lasso.py'))
+    if args.network and not (args.bluetooth or args.mode):
+        exec_path = str(pathlib.Path(__file__).parent.resolve().joinpath('modules/network.py'))
+    elif args.bluetooth and not (args.network or args.mode):
+        exec_path = str(pathlib.Path(__file__).parent.resolve().joinpath('modules/bluetooth.py'))
+    elif args.mode and not (args.bluetooth or args.network):
+        exec_path = str(pathlib.Path(__file__).parent.resolve().joinpath('lasso.py'))
+
+    args.mode = ":n" if args.mode == None else args.mode
+
+    wal_command = ['alacritty',  '--title', 'lasso', '--class', 'lasso', '--print-events', '-e', 'fish', '-c', f"wal -Rqn; python {exec_path} -m {args.mode}"  ]
+    no_wal_command = ['alacritty',  '--title', 'lasso', '--class', 'lasso', '--print-events', '-e', 'python', exec_path, "-m", args.mode ]
     command = wal_command if shutil.which("wal") and read_conf.use_wal else no_wal_command
 
     if args.debug: command.insert(1, '--hold')
