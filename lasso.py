@@ -1,6 +1,7 @@
 import os
 import sys
 import json
+import math
 import time
 import argparse
 import threading
@@ -19,8 +20,8 @@ except Exception as e:
     print(e)
 
 TOP_BAR_PATH = "/tmp/lasso_top_bar"
-FISH_COMMAND = f"--preview 'while true; echo \"$(cat {TOP_BAR_PATH})\"; sleep {str(read_conf.update_interval)}; end' "
-BASH_ZSH_COMMAND = f"--preview 'while true; do echo \"$(cat {TOP_BAR_PATH})\"; sleep {str(read_conf.update_interval)}; done' "
+FISH_COMMAND = f"'while true; echo \"$(cat {TOP_BAR_PATH})\"; sleep {str(read_conf.update_interval)}; end'"
+BASH_ZSH_COMMAND = f"'while true; do echo \"$(cat {TOP_BAR_PATH})\"; sleep {str(read_conf.update_interval)}; done'"
 FZF_STATUS_COMMAND = FISH_COMMAND if read_conf.shell == "fish" else BASH_ZSH_COMMAND
 
 # Function to get system info
@@ -32,6 +33,10 @@ def get_system_info():
         except Exception as e:
             top_bar = hacks.get_fallback_top_bar() # type: ignore
 
+        terminal_width = os.get_terminal_size().columns
+        padding = math.floor((terminal_width - len(top_bar)) / 2)
+        top_bar = (" " * padding) + top_bar
+
         with open(TOP_BAR_PATH, "w") as f:
             f.write(top_bar)
 
@@ -39,11 +44,16 @@ def get_system_info():
 
 # runs the fzf command with the correct status and options. finally returns the selected value
 def run_fzf(options):
-    fzf_command = (
-        "fzf --header-lines=0 --no-info "
-        f"{FZF_STATUS_COMMAND}"
+    fzf_command = " ".join([
+        "fzf",
+        "--header-lines=0",
+        "--no-info",
+        "--ignore-case",
+        "--color='spinner:0'",
+        "--preview",
+        FZF_STATUS_COMMAND,
         "--preview-window=up:1:follow:wrap:noinfo"
-    )
+    ])
     fzf_input = "\n".join(options)
     result = subprocess.run(fzf_command, input=fzf_input, text=True, shell=True, stdout=subprocess.PIPE)
     return result.stdout.strip()
