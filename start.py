@@ -14,8 +14,9 @@ def main():
     parser.add_argument('-n', '--network', action='store_true', help="Start the LASSO network selector instead of the launcher.")
     parser.add_argument('-b', '--bluetooth', action='store_true', help='Start the LASSO bluetooth selector instead of the launcher.')
     args = parser.parse_args()
+    print(args.mode)
 
-    if args.network ^ args.bluetooth ^ (args.mode == ''):
+    if args.network ^ args.bluetooth ^ (args.mode == None):
         print('The parameters "-b/--bluetooth", "-n/--network" and "-m/--mode" are mutually exclusive!')
         exit()
 
