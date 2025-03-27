@@ -48,3 +48,5 @@ match shell:
     case "zsh": pass
     case _:
         errors.ShellError()
+
+execute_commands = config["execute_commands"]

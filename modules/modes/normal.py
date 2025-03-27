@@ -45,8 +45,8 @@ def get_opt():
 
 def exec_selection(selection):
     if not selection in exec_map or selection.startswith(">"):
+        if not conf.execute_commands: return
         selection = selection.removeprefix(">").strip()
-        if not shutil.which(selection): return
         command = f"setsid {selection} > /dev/null 2>&1 &"
         subprocess.run(command, shell=True, capture_output=True, text=True)
         return

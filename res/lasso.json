@@ -2,6 +2,7 @@
   "use_nixGL": false,
   "use_wal": true,
   "shell": "auto",
+  "execute_commands": true,
   "app_dirs": [],
   "apps": [
     { "exec": "firefox", "name": "Firefox" },
