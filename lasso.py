@@ -52,11 +52,13 @@ def run_fzf(options):
         "--color='spinner:0'",
         "--preview",
         FZF_STATUS_COMMAND,
-        "--preview-window=up:1:follow:wrap:noinfo"
+        "--preview-window=up:1:follow:wrap:noinfo",
+        "--print-query"
     ])
     fzf_input = "\n".join(options)
     result = subprocess.run(fzf_command, input=fzf_input, text=True, shell=True, stdout=subprocess.PIPE)
-    return result.stdout.strip()
+    output = result.stdout.strip().split("\n")[0] if len(result.stdout.strip().split("\n")) == 1 else result.stdout.strip().split("\n")[1]
+    return output
 
 # adds the additional options for quiting and switching modes. also change modes/quit if requested, otherwise return the selected option
 def handle_modes(options):

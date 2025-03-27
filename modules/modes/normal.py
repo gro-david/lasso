@@ -1,4 +1,5 @@
 import os
+import shutil
 import subprocess
 from pathlib import Path
 from .. import read_conf as conf
@@ -43,7 +44,12 @@ def get_opt():
     return COMMAND, options
 
 def exec_selection(selection):
-    if not selection in exec_map: return
+    if not selection in exec_map or selection.startswith(">"):
+        selection = selection.removeprefix(">").strip()
+        if not shutil.which(selection): return
+        command = f"setsid {selection} > /dev/null 2>&1 &"
+        subprocess.run(command, shell=True, capture_output=True, text=True)
+        return
     try:
         path = os.environ["PATH"]
         if exec_map[selection]["env_path"] != "":
