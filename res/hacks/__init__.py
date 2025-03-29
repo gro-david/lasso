@@ -1,7 +1,7 @@
 # DO NOT MODIFY THIS FILE
 # This file is responsible for being able to use any hacks, and for the fallback behavior of the top bar.
-# If you do modify this, it could result in a non working installation of FUSE.
-# For creating hacks, please check out the documentation on GitHub https://github.com/gro-david/fuse
+# If you do modify this, it could result in a non working installation of LASSO.
+# For creating hacks, please check out the documentation on GitHub https://github.com/gro-david/lasso
 
 import time
 import glob
@@ -14,6 +14,7 @@ __all__ = [ basename(f)[:-3] for f in modules if isfile(f) and not f.endswith('_
 # import all hacks the user made
 from . import *
 from .modes import *
+from .commands import *
 
 def get_fallback_top_bar():
 	time_now = time.strftime("%Y-%m-%d %H:%M:%S")
