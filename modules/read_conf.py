@@ -21,11 +21,23 @@ with open(config_path) as f:
 
 dashboards = config["dashboard"]
 dashboard_names = [elem["name"] for elem in dashboards]
-dashboard_exec_map = {elem["name"]: {"exec": elem["exec"], "env_path": elem["env_path"] if "env_path" in elem else ""} for elem in dashboards}
+dashboard_exec_map = {
+    elem["name"]: {
+        "exec": elem["exec"],
+        "env_path": elem["env_path"] if "env_path" in elem else "",
+    }
+    for elem in dashboards
+}
 
 apps = config["apps"]
 app_names = [elem["name"] for elem in apps]
-app_exec_map = {elem["name"]: {"exec": elem["exec"], "env_path": elem["env_path"] if "env_path" in elem else ""} for elem in apps}
+app_exec_map = {
+    elem["name"]: {
+        "exec": elem["exec"],
+        "env_path": elem["env_path"] if "env_path" in elem else "",
+    }
+    for elem in apps
+}
 
 app_dirs = config["app_dirs"]
 
@@ -38,15 +50,19 @@ device = config["device"]
 shell = config["shell"]
 match shell:
     case "auto":
-        if shutil.which("fish"): shell = "fish"
-        elif shutil.which("zsh"): shell = "zsh"
-        elif shutil.which("bash"): shell = "bash"
+        if shutil.which("fish"):
+            shell = "fish"
+        elif shutil.which("zsh"):
+            shell = "zsh"
+        elif shutil.which("bash"):
+            shell = "bash"
         else:
             errors.ShellError()
-    case "fish": pass
-    case "bash": pass
-    case "zsh": pass
+    case "fish":
+        pass
+    case "bash":
+        pass
+    case "zsh":
+        pass
     case _:
         errors.ShellError()
-
-execute_commands = config["execute_commands"]

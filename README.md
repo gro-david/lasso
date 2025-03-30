@@ -49,20 +49,23 @@ LASSO was designed to make my workflow with the [Niri](https://github.com/yalter
 ## Installation
 On most distros you will be able to use the launcher by just cloning the repo and then running the `start.py` file
 
-On NixOS this should work too, but you can also use home-manager. You can just import the two files into home-manager. You can configure the dashboard using `launcher.nix`, a few entries will already be included by default. Then just rebuild your home. A flake will follow soon.
-
 For Arch Linux, just install the lasso-launcher package from the AUR.
 
 ## Documentation
 After installing you should be able to start the program by executing the `start.py` file or on Nix/Arch by executing the `lasso` command.
 The configuration is written in plain json and can is usually found under `~.config/lasso/lasso.json`. The following options are available:
+  - `"use_nixGL": boolean`, whether to execute processes with nixGL. (deprecated, will be removed soon)
+  - `"use_wal": boolean`, whether to execute wal after starting alacritty. Required to have your terminal correctly colored.
+  - `"update_interval": float`, how often to update the system bar (secs)
+  - `"device": string`, which device to use for wireless network configuration.
+  - `"shell": (auto|fish|bash|zsh)`, set the shell to use, must be exactly one of the four options.
   - `"app_dirs": []`, This list of the directories that LASSO will look for applications. If this options is omitted the usual locations will be crawled. If this option is present _only_ the listed directories will be crawled. To disable automatically loading .desktop files, include this option but leave the list empty.
   - `"apps": []`, This should contain all applications that you want to manually add to LASSO. They should have the following format:
     - `{ "env_path": "", "exec": "", "name": "" }`:
       - `"env_path"` is a string representing the PATH environment variable.
       - `"exec"` is the command which will be executed.
       - `"name"` is the display name that will be shown.
-  - `"dashboard": []`, This is a list containing anythinhg that should be included in your dashboard. It uses the same format as the applications.
+  - `"dashboard": []`, This is a list containing anything that should be included in your dashboard. It uses the same format as the applications.
 
 LASSO is designed to be hackable. You can customize a few things up to now, with more coming in the future. If there is anything you would like to customize but is not customizable, please open an issue.
 
@@ -76,14 +79,18 @@ Each mode should include a constant variable called `COMMAND` which will be the 
 
 There are two methods required by LASSO. `get_opt()` should return `COMMAND` and a list of options that should be selectable. `exec_selection(selection)` will be called by FUSE when the user selects an entry. This should only handle your custom options, you do not need to include handling of mode switching commands.
 
+In LASSO there is support for custom commands. These are expressions written in the input field of one of the modes. These can be created under `~/.config/lasso/hacks/commands/`. There are three things that must be defined. These are the constants `PREFIX` and `MODE`, which define in which mode the command can be used and what needs to be prepended to the command that one wants to execute. `MODE` can be defined as `"any"`, which will make the command available in all modes. 
+
+A function called `exec(selection)` is also required which will receive the command (stripped and without the prefix) from `lasso.py`, which will have to execute your desired program. It is recommended to execute the program with `setsid` as otherwise it will terminate as soon as LASSO is closed. 
+
 Example top bar:
-```
+```python
 def get():
   return "This is my system bar"
 ```
 
 Example mode:
-```
+```python
 COMMAND = ":e"
 
 def get_opt():
@@ -93,4 +100,15 @@ def exec_selection(selection):
   match selection:
     3: print("You selected the number 3")
     _: print(selection)
+```
+Example command:
+```python
+PREFIX = ">"
+MODE = "any"
+
+def exec(selection):
+  print(selection)
+```
+```
+```
 ```

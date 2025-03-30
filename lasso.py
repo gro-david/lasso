@@ -76,6 +76,9 @@ def run_commands(selection):
     if (mode, selection[0]) in commands:
         commands[(mode, selection[0])](selection.removeprefix(selection[0]).strip())
         return True
+    elif ("any", selection[0]) in commands:
+        commands[("any", selection[0])](selection.removeprefix(selection[0]).strip())
+        return True
     return False
 
 
