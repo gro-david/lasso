@@ -6,7 +6,7 @@ LASSO was designed to make my workflow with the [Niri](https://github.com/yalter
  - Customization of dashboard commands, like network management, bluetooth, or a system monitor. Anything goes that has a shell or a TUI
  - Status in the launcher instead of a seperate bar, (eg: volume, battery, backlight or keyboard language)
  - Window switching in niri
- - Custom tools for managing Bluetooth and WiFi connections is included. The fit the theme and style of FUSE. The can be started by starting the respective files in the modules directory.
+ - Custom tools for managing Bluetooth and WiFi connections is included. The fit the theme and style of LASSO. The can be started by starting the respective files in the modules directory.
 
 ### Normal mode:
 ![image](https://github.com/user-attachments/assets/e6cb6053-d83e-4861-a44b-1a7244e94dec)
@@ -78,7 +78,7 @@ Creating modes is also relatively simple and done in python. These will be loade
 
 Each mode should include a constant variable called `COMMAND` which will be the command used to switch to this mode. It usually starts with a colon (:) and is only a single letter, but there is nothing stopping you of naming it something else.
 
-There are two methods required by LASSO. `get_opt()` should return `COMMAND` and a list of options that should be selectable. `exec_selection(selection)` will be called by FUSE when the user selects an entry. This should only handle your custom options, you do not need to include handling of mode switching commands.
+There are two methods required by LASSO. `get_opt()` should return `COMMAND` and a list of options that should be selectable. `exec_selection(selection)` will be called by LASSO when the user selects an entry. This should only handle your custom options, you do not need to include handling of mode switching commands.
 
 In LASSO there is support for custom commands. These are expressions written in the input field of one of the modes. These can be created under `~/.config/lasso/hacks/commands/`. There are three things that must be defined. These are the constants `PREFIXES` and `MODES` (both a list of strings), which define in which mode the command can be used and what needs to be prepended to the command that one wants to execute. `MODES` can be defined as `["any"]`, which will make the command available in all modes. 
 

@@ -11,7 +11,7 @@ source=("git+https://github.com/gro-david/lasso.git")
 sha256sums=('SKIP')
 
 pkgver() {
-  cd "$srcdir/lasso"
+  cd "$brcdir/lasso"
   printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
 }
 
