@@ -71,6 +71,14 @@ def run_fzf(options):
     return output
 
 
+def run_commands(selection):
+    selection = selection.strip()
+    if (mode, selection[0]) in commands:
+        commands[(mode, selection[0])](selection.removeprefix(selection[0]).strip())
+        return True
+    return False
+
+
 # adds the additional options for quiting and switching modes. also change modes/quit if requested, otherwise return the selected option
 def handle_modes(options):
     index = list(modes.keys()).index(mode)
@@ -87,6 +95,8 @@ def handle_modes(options):
     elif selection in modes:
         modes[selection]()
         return ""
+    if run_commands(selection):
+        return ""
     return selection
 
 
@@ -95,7 +105,8 @@ def run_mode(get_options, exec_selection):
 
     mode, options = get_options()
     selection = handle_modes(options)
-    exec_selection(selection)
+    if selection:
+        exec_selection(selection)
 
 
 mode = ""
@@ -114,6 +125,8 @@ for _mode in hacks.modes.modes:  # type: ignore
         hacks.modes.modes[_mode]["get_opt"],  # type: ignore
         hacks.modes.modes[_mode]["exec_selection"],  # type: ignore
     )
+
+commands = hacks.commands.commands  # type: ignore
 
 # add the hack modes to the dict of all modes
 modes.update(hack_modes)

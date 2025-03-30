@@ -1,25 +1,11 @@
 import os
-import sys
 import subprocess
 from pathlib import Path
 from .. import read_conf as conf
 
-try:
-    # import hacks from the just added paths
-    sys.path.append(conf.hacks_path)
-    import hacks  # type: ignore
-except Exception as e:
-    print(
-        "Could not import hacks. Please check the following error message, and open an issue if required."
-    )
-    print(e)
-
 COMMAND = ":n"
 
 exec_map = {}
-
-commands = hacks.commands.commands  # type: ignore
-print(commands)
 
 
 # the normal operating mode, for launching apps
@@ -83,11 +69,6 @@ def get_opt():
 
 
 def exec_selection(selection):
-    selection = selection.strip()
-    for command in commands:
-        if selection.startswith(command):
-            commands[command](selection)
-            return
     try:
         path = os.environ["PATH"]
         if exec_map[selection]["env_path"] != "":

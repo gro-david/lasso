@@ -1,10 +1,11 @@
 import subprocess
 
-prefix = "w"
+PREFIX = "w"
+MODE = ":n"
 
 
 def exec(selection):
-    selection = selection.removeprefix(prefix).strip()
+    selection = selection.removeprefix(PREFIX).strip()
     if not selection.startswith("https://"):
         selection = f"https://{selection}"
 
