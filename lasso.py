@@ -83,6 +83,9 @@ def run_commands(selection):
     elif ("any", selection[0]) in commands:
         commands[("any", selection[0])](selection.removeprefix(selection[0]).strip())
         return True
+    elif mode in read_conf.default_commands:
+        commands[(mode, read_conf.default_commands[mode])](selection)
+        return True
 
     return False
 

@@ -58,7 +58,7 @@ The configuration is written in plain json and can is usually found under `~.con
   - `"update_interval": float`, how often to update the system bar (secs)
   - `"device": string`, which device to use for wireless network configuration.
   - `"shell": (auto|fish|bash|zsh)`, set the shell to use, must be exactly one of the four options.
-  - `"prompt": string`, what your prompt should be. 
+  - `"prompt": string`, what your prompt should be.
   - `"app_dirs": []`, This list of the directories that LASSO will look for applications. If this options is omitted the usual locations will be crawled. If this option is present _only_ the listed directories will be crawled. To disable automatically loading .desktop files, include this option but leave the list empty.
   - `"apps": []`, This should contain all applications that you want to manually add to LASSO. They should have the following format:
     - `{ "env_path": "", "exec": "", "name": "" }`:
@@ -66,6 +66,7 @@ The configuration is written in plain json and can is usually found under `~.con
       - `"exec"` is the command which will be executed.
       - `"name"` is the display name that will be shown.
   - `"dashboard": []`, This is a list containing anything that should be included in your dashboard. It uses the same format as the applications.
+  - `"default_commands": {"<mode>": "<command>"}`, define which command is default in any given mode. This will only take effect if you do not specify any command, and what you type is not in the list of selectable entries.
 
 LASSO is designed to be hackable. You can customize a few things up to now, with more coming in the future. If there is anything you would like to customize but is not customizable, please open an issue.
 

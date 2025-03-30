@@ -46,6 +46,7 @@ use_wal = config["use_wal"]
 update_interval = float(config["update_interval"])
 
 device = config["device"]
+prompt = config["prompt"] if "prompt" in config else "> "
 
 shell = config["shell"]
 match shell:
@@ -67,4 +68,4 @@ match shell:
     case _:
         errors.ShellError()
 
-prompt = config["prompt"] if "prompt" in config else "> "
+default_commands = config["default_commands"] if "default_commands" in config else {}
