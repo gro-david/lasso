@@ -25,7 +25,6 @@ LASSO was designed to make my workflow with the [Niri](https://github.com/yalter
  - python-psutil, for showing battery information in the header bar
  - fzf, for the whole program to even work
  - nerdfont, to display the icons in the status bar correctly
- - fish, this is the shell for which this was written. it is probably possible to port to other shells, but I did not have the time up until now.
 
 ## How to use:
  -  Add the following rule to your niri config file:
@@ -59,6 +58,7 @@ The configuration is written in plain json and can is usually found under `~.con
   - `"update_interval": float`, how often to update the system bar (secs)
   - `"device": string`, which device to use for wireless network configuration.
   - `"shell": (auto|fish|bash|zsh)`, set the shell to use, must be exactly one of the four options.
+  - `"prompt": string`, what your prompt should be. 
   - `"app_dirs": []`, This list of the directories that LASSO will look for applications. If this options is omitted the usual locations will be crawled. If this option is present _only_ the listed directories will be crawled. To disable automatically loading .desktop files, include this option but leave the list empty.
   - `"apps": []`, This should contain all applications that you want to manually add to LASSO. They should have the following format:
     - `{ "env_path": "", "exec": "", "name": "" }`:

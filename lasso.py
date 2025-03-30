@@ -57,6 +57,7 @@ def run_fzf(options):
             FZF_STATUS_COMMAND,
             "--preview-window=up:1:follow:wrap:noinfo",
             "--print-query",
+            f"--prompt='{read_conf.prompt}'",
         ]
     )
     fzf_input = "\n".join(options)
@@ -73,12 +74,16 @@ def run_fzf(options):
 
 def run_commands(selection):
     selection = selection.strip()
+    if not selection:
+        return False
+
     if (mode, selection[0]) in commands:
         commands[(mode, selection[0])](selection.removeprefix(selection[0]).strip())
         return True
     elif ("any", selection[0]) in commands:
         commands[("any", selection[0])](selection.removeprefix(selection[0]).strip())
         return True
+
     return False
 
 

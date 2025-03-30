@@ -5,7 +5,7 @@ from pathlib import Path
 
 try:
     import errors
-except Exception as e:
+except Exception:
     from modules import errors
 
 username = os.getlogin()
@@ -66,3 +66,5 @@ match shell:
         pass
     case _:
         errors.ShellError()
+
+prompt = config["prompt"] if "prompt" in config else "> "
