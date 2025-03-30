@@ -1,7 +1,7 @@
 import subprocess
 
-PREFIX = "w"
-MODE = ":n"
+PREFIX = ["w"]
+MODE = [":n"]
 
 
 def exec(selection):

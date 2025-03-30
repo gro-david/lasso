@@ -24,11 +24,10 @@ class CommandExistsException(Exception):
 
 commands = {}
 for module in __all__:
-    cmd = sys.modules[f"hacks.commands.{module}"].PREFIX
-    mode = sys.modules[f"hacks.commands.{module}"].MODE
-    exec = sys.modules[f"hacks.commands.{module}"].exec
+    for cmd in sys.modules[f"hacks.commands.{module}"].PREFIXES:
+        for mode in sys.modules[f"hacks.commands.{module}"].MODES:
+            exec = sys.modules[f"hacks.commands.{module}"].exec
+            if (mode, cmd) in commands:
+                raise CommandExistsException()
 
-    if (mode, cmd) in commands:
-        raise CommandExistsException()
-
-    commands[(mode, cmd)] = exec
+            commands[(mode, cmd)] = exec

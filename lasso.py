@@ -13,6 +13,8 @@ try:
     # import hacks from the just added paths
     sys.path.append(read_conf.hacks_path)
     import hacks  # type: ignore
+
+    print(hacks.commands.commands)
 except Exception as e:
     print(
         "Could not import hacks. Please check the following error message, and open an issue if required."

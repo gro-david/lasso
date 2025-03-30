@@ -1,7 +1,7 @@
 import subprocess
 
-PREFIX = ">"
-MODE = ":n"
+PREFIX = [">"]
+MODE = [":n"]
 
 
 def exec(selection):

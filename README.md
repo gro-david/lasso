@@ -80,7 +80,7 @@ Each mode should include a constant variable called `COMMAND` which will be the 
 
 There are two methods required by LASSO. `get_opt()` should return `COMMAND` and a list of options that should be selectable. `exec_selection(selection)` will be called by FUSE when the user selects an entry. This should only handle your custom options, you do not need to include handling of mode switching commands.
 
-In LASSO there is support for custom commands. These are expressions written in the input field of one of the modes. These can be created under `~/.config/lasso/hacks/commands/`. There are three things that must be defined. These are the constants `PREFIX` and `MODE`, which define in which mode the command can be used and what needs to be prepended to the command that one wants to execute. `MODE` can be defined as `"any"`, which will make the command available in all modes. 
+In LASSO there is support for custom commands. These are expressions written in the input field of one of the modes. These can be created under `~/.config/lasso/hacks/commands/`. There are three things that must be defined. These are the constants `PREFIXES` and `MODES` (both a list of strings), which define in which mode the command can be used and what needs to be prepended to the command that one wants to execute. `MODES` can be defined as `["any"]`, which will make the command available in all modes. 
 
 A function called `exec(selection)` is also required which will receive the command (stripped and without the prefix) from `lasso.py`, which will have to execute your desired program. It is recommended to execute the program with `setsid` as otherwise it will terminate as soon as LASSO is closed. 
 
@@ -104,8 +104,8 @@ def exec_selection(selection):
 ```
 Example command:
 ```python
-PREFIX = ">"
-MODE = "any"
+PREFIXES = [">"]
+MODES = ["any"]
 
 def exec(selection):
   print(selection)
