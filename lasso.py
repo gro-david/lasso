@@ -13,8 +13,6 @@ try:
     # import hacks from the just added paths
     sys.path.append(read_conf.hacks_path)
     import hacks  # type: ignore
-
-    print(hacks.commands.commands)
 except Exception as e:
     print(
         "Could not import hacks. Please check the following error message, and open an issue if required."
@@ -66,12 +64,13 @@ def run_fzf(options):
     result = subprocess.run(
         fzf_command, input=fzf_input, text=True, shell=True, stdout=subprocess.PIPE
     )
+    in_list = len(result.stdout.strip().split("\n")) > 1
     output = (
         result.stdout.strip().split("\n")[0]
         if len(result.stdout.strip().split("\n")) == 1
         else result.stdout.strip().split("\n")[1]
     )
-    return output
+    return in_list, output
 
 
 def run_commands(selection):
@@ -101,14 +100,14 @@ def handle_modes(options):
         options.append(":q")
         options.extend(relevant_modes)
 
-    selection = run_fzf(options)
+    in_list, selection = run_fzf(options)
 
     if selection == ":q":
         exit()
     elif selection in modes:
         modes[selection]()
         return ""
-    if run_commands(selection):
+    if not in_list and run_commands(selection):
         return ""
     return selection
 
