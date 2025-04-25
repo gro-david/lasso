@@ -18,12 +18,14 @@ def get_opt():
         window_id = next((line.split(" ", 2)[2].strip(":") for line in lines if line.startswith("Window ID")), None)
         title = next((line.split(": ", 1)[1] for line in lines if line.startswith("Title:")), None)
         title = str(title).replace('"', '')
+        window_class = next((line.split(" ", 2)[2].strip(":") for line in lines if line.startswith("App ID")), None)
+        window_class = str(window_class).replace('"', '').capitalize()
 
         if title == 'lasso': continue
 
-        if window_id and title:
-            options.append(title)
-            window_map[title] = window_id
+        if window_id and title and window_class:
+            options.append(f"{window_class} | {title}")
+            window_map[f"{window_class} | {title}"] = window_id
 
     return COMMAND, options
 
