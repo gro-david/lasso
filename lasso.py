@@ -75,14 +75,16 @@ def run_fzf(options):
 
 def run_commands(selection):
     selection = selection.strip()
+    prefix = selection.split(" ")[0]
+
     if not selection:
         return False
 
-    if (mode, selection[0]) in commands:
-        commands[(mode, selection[0])](selection.removeprefix(selection[0]).strip())
+    if (mode, prefix) in commands:
+        commands[(mode, prefix)](selection.removeprefix(prefix).strip())
         return True
-    elif ("any", selection[0]) in commands:
-        commands[("any", selection[0])](selection.removeprefix(selection[0]).strip())
+    elif ("any", prefix) in commands:
+        commands[("any", prefix)](selection.removeprefix(prefix).strip())
         return True
     elif mode in read_conf.default_commands:
         commands[(mode, read_conf.default_commands[mode])](selection)
