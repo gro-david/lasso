@@ -59,13 +59,13 @@ def main():
     args.mode = ":n" if args.mode is None else args.mode
 
     wal_command = [
-        "alacritty",
+        "kitty",
         "--title",
         "lasso",
         "--class",
         "lasso",
-        "--print-events",
-        "-e",
+        "-c",
+        f"/home/{read_conf.username}/.config/lasso/kitty.conf",
         "fish",
         "-c",
         f"wal -Rqn; python {exec_path} -m {args.mode}",
@@ -76,8 +76,8 @@ def main():
         "lasso",
         "--class",
         "lasso",
-        "--print-events",
-        "-e",
+        "-c",
+        f"/home/{read_conf.username}/.config/lasso/kitty.conf",
         "python",
         exec_path,
         "-m",
