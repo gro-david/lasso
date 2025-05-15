@@ -78,6 +78,7 @@ def main():
         "lasso",
         "-c",
         f"/home/{read_conf.username}/.config/lasso/kitty.conf",
+        "-e",
         "python",
         exec_path,
         "-m",

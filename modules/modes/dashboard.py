@@ -5,6 +5,7 @@ from .. import read_conf as conf
 COMMAND = ":d"
 exec_map = {}
 
+
 # Dashboard mode: Launch configured apps
 def get_opt():
     global exec_map
@@ -14,8 +15,10 @@ def get_opt():
 
     return COMMAND, options
 
+
 def exec_selection(selection):
-    if not selection in exec_map: return
+    if selection not in exec_map:
+        return
 
     path = os.environ["PATH"]
     if exec_map[selection]["env_path"] != "":

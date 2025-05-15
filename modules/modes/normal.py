@@ -1,4 +1,5 @@
 import os
+import json
 import subprocess
 from pathlib import Path
 from .. import read_conf as conf
@@ -70,15 +71,42 @@ def get_opt():
 
 def exec_selection(selection):
     try:
-        path = os.environ["PATH"]
-        if exec_map[selection]["env_path"] != "":
-            os.environ["PATH"] = exec_map[selection]["env_path"]
-        command = f"setsid {exec_map[selection]['exec']} > /dev/null 2>&1 &"
-        os.environ["PATH"] = path
-        result = subprocess.run(command, shell=True, capture_output=True, text=True)
-        if result.returncode != 0:
-            print(f"Error launching {selection}:\n{result.stderr}")
+        if exec_map[selection]["single_instance"]:
+            try_switch_to_app(selection)
         else:
-            exit()
+            launch_app(selection)
+
     except Exception as e:
         print(f"Failed to launch {selection}: {e}")
+
+
+def launch_app(selection):
+    # set the correct PATH
+    path = os.environ["PATH"]
+    if exec_map[selection]["env_path"] != "":
+        os.environ["PATH"] = exec_map[selection]["env_path"]
+    command = f"setsid {exec_map[selection]['exec']} > /dev/null 2>&1 &"
+    os.environ["PATH"] = path
+
+    result = subprocess.run(command, shell=True, capture_output=True, text=True)
+    if result.returncode != 0:
+        print(f"Error launching {selection}:\n{result.stderr}")
+    else:
+        exit()
+
+
+def try_switch_to_app(selection):
+    # try switching to app by looking at all the window classes and switching if one matches
+    window_data_raw = subprocess.getoutput("niri msg --json windows")
+    window_data = json.loads(window_data_raw)
+    for window in window_data:
+        print(exec_map[selection])
+        if window["app_id"] != exec_map[selection]["window_class"]:
+            continue
+        subprocess.run(
+            ["niri", "msg", "action", "focus-window", "--id", str(window["id"])]
+        )
+        return
+
+    # otherwise just simply launch the app
+    launch_app(selection)

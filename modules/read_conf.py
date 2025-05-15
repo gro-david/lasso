@@ -35,9 +35,19 @@ app_exec_map = {
     elem["name"]: {
         "exec": elem["exec"],
         "env_path": elem["env_path"] if "env_path" in elem else "",
+        "window_class": elem["window_class"] if "window_class" in elem else "",
+        "single_instance": (
+            elem["single_instance"] if "single_instance" in elem else False
+        ),
     }
     for elem in apps
 }
+
+for elem in app_exec_map:
+    if app_exec_map[elem]["single_instance"] and not app_exec_map[elem]["window_class"]:
+        errors.ConfigError(
+            "For single instance mode you also have to specify the class of the window"
+        )
 
 app_dirs = config["app_dirs"]
 

@@ -64,12 +64,12 @@ def run_fzf(options):
     result = subprocess.run(
         fzf_command, input=fzf_input, text=True, shell=True, stdout=subprocess.PIPE
     )
-    in_list = len(result.stdout.strip().split("\n")) > 1
     output = (
         result.stdout.strip().split("\n")[0]
         if len(result.stdout.strip().split("\n")) == 1
         else result.stdout.strip().split("\n")[1]
     )
+    in_list = output in options
     return in_list, output
 
 
